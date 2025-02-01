@@ -14,6 +14,7 @@ class Material extends Model
         'image',
         'video',
         'file_path',
+        'category',
     ];
 
     public function user(): BelongsTo

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Section;
 use App\Models\StudentInSection;
+use App\Models\Material;
 
 class DatabaseSeeder extends Seeder
 {
@@ -130,5 +131,50 @@ class DatabaseSeeder extends Seeder
                 'student_id' => $i,
             ]);
         }
+
+        // Create materials
+        Material::create([
+            'visible_to_all' => true,
+            'section_id' => $section1->id,
+            'user_id' => 1, // Assuming Tutor One has ID 1
+            'message' => 'Welcome to Course One, Section 1!',
+            'image' => null,
+            'video' => null,
+            'file_path' => null,
+            'category' => 'announcement',
+        ]);
+
+        Material::create([
+            'visible_to_all' => false,
+            'section_id' => $section2->id,
+            'user_id' => 2, // Assuming Tutor Two has ID 2
+            'message' => 'Course One, Section 2 materials are now available.',
+            'image' => null,
+            'video' => null,
+            'file_path' => null,
+            'category' => 'notes',
+        ]);
+
+        Material::create([
+            'visible_to_all' => true,
+            'section_id' => $section3->id,
+            'user_id' => 3, // Assuming Tutor Three has ID 3
+            'message' => 'Welcome to Course Two, Section 1!',
+            'image' => null,
+            'video' => null,
+            'file_path' => null,
+            'category' => 'announcement',
+        ]);
+
+        Material::create([
+            'visible_to_all' => false,
+            'section_id' => $section4->id,
+            'user_id' => 1, // Assuming Tutor One has ID 1
+            'message' => 'Course Two, Section 2 materials are now available.',
+            'image' => null,
+            'video' => null,
+            'file_path' => null,
+            'category' => 'assignment',
+        ]);
     }
 }

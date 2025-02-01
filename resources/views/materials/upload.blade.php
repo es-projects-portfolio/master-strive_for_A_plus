@@ -67,6 +67,19 @@
                 </select>
             </div>
             
+            <div class="mt-4">
+                <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
+                <div class="grid grid-cols-2 gap-3 mr-2">
+                    @foreach(['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement'] as $category)
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="category" value="{{ $category }}" class="form-radio text-gray-700" {{ old('category') == $category ? 'checked' : '' }} required>
+                            <span class="ml-2 px-2">{{ ucfirst($category) }}</span>
+                        </label>
+                    @endforeach
+                </div>
+                <x-input-error :messages="$errors->get('category')" class="mt-2" />
+            </div>
+
             <!-- Error messages and preview section -->
             <div id="image-preview" class="mt-4 space-y-2"></div>
             

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->string('file_path')->nullable();
+            $table->enum('category', ['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement']);
             $table->timestamps();
         });
     }

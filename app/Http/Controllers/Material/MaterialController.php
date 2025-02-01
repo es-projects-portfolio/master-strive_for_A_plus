@@ -77,6 +77,7 @@ class MaterialController extends Controller
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
             'file_path' => 'nullable|file|mimes:csv,json,pdf,docx,xlsx|max:5120',
+            'category' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
         ]);
 
         // Set visibility to 'all' if checkbox is checked
@@ -184,6 +185,7 @@ class MaterialController extends Controller
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
             'file_path' => 'nullable|file|mimes:csv,json,pdf,docx,xlsx|max:5120',
+            'category' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
         ]);
 
         // Set visibility to 'all' if checkbox is checked

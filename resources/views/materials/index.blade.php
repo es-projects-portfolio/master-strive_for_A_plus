@@ -52,7 +52,9 @@
                                 </x-dropdown>
                             @endif
                         </div>
-                        <p class="mt-4 text-lg text-gray-900">{{ $material->message }}</p>
+                        <div class="m-4 p-4 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-lg">
+                            <p class="mt-4 text-lg text-gray-900">{{ $material->message }}</p>
+                        </div>
                         @if ($material->image)
                             <img src="{{ asset('storage/' . $material->image) }}" alt="Material Image" class="mt-4">
                         @endif
@@ -68,15 +70,29 @@
                                     tag="a"
                                     href="{{ asset('storage/' . $material->file_path) }}"
                                     download
-                                    class="inline-flex items-center px-4 py-2 border rounded-md hover:bg-indigo-50 transition-colors duration-200"
+                                    class="inline-flex items-center px-4 py-2 border rounded-md hover:bg-gray-50 transition-colors duration-200"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                     </svg>
                                     Download File
                                 </x-secondary-button>
                             </div>
                         @endif
+                        <div class="text-right mt-4">
+                            <span class="inline-flex items-center border rounded-md px-3 py-1 text-xs font-light lowercase 
+                                @switch($material->category)
+                                    @case('past-year') bg-blue-100 text-blue-800 @break
+                                    @case('assignment') bg-green-100 text-green-800 @break
+                                    @case('quiz') bg-yellow-100 text-yellow-800 @break
+                                    @case('exam') bg-red-100 text-red-800 @break
+                                    @case('notes') bg-purple-100 text-purple-800 @break
+                                    @case('announcement') bg-pink-100 text-pink-800 @break
+                                    @default bg-gray-100 text-gray-800
+                                @endswitch">
+                                {{ $material->category }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             @endforeach
