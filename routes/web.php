@@ -22,12 +22,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware('can:is_admin')->group(function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-        Route::post('/admin/create-course', [AdminController::class, 'createCourse'])->name('admin.createCourse');
-        Route::post('/admin/create-section', [AdminController::class, 'createSection'])->name('admin.createSection');
-        Route::post('/admin/assign-student-to-section', [AdminController::class, 'assignStudentsToSection'])->name('admin.assignStudentToSection');
-    });
+    // Admin routes
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/create-course', [AdminController::class, 'createCourse'])->name('admin.createCourse');
+    Route::post('/admin/create-section', [AdminController::class, 'createSection'])->name('admin.createSection');
+    Route::post('/admin/assign-student-to-section', [AdminController::class, 'assignStudentsToSection'])->name('admin.assignStudentToSection');
 
     // Material routes
     Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');

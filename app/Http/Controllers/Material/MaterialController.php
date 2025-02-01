@@ -19,20 +19,18 @@ class MaterialController extends Controller
      */
     public function index(): View
     {
-
-        $courses = Course::with(['sections.tutor', 'sections.studentsInSection.student'])->get();
-
         $user = Auth::user();
 
         if ($user->role === 'tutor') {
             // Tutors can see all materials they created
-            $materials = Material::where('user_id', $user->id)->get();
+            $materials = Material::orderBy('created_at', 'desc')->get();
         } else {
             // Students can see materials visible to all or in their sections
             $materials = Material::where('visible_to_all', true)
                 ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
                     $query->where('student_id', $user->id);
                 })
+                ->orderBy('created_at', 'desc')
                 ->get();
         }
 

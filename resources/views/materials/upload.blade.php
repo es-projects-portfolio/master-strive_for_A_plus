@@ -99,9 +99,48 @@
             }
         });
 
-        document.querySelectorAll('button.cursor-pointer').forEach(button => {
-            button.addEventListener('click', function() {
-                this.querySelector('input[type="file"]').click();
+        function createFilePreview(file) {
+            const preview = document.getElementById('image-preview');
+            const previewItem = document.createElement('div');
+            previewItem.className = 'flex items-center p-2 bg-gray-50 rounded-md';
+
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.className = 'h-16 w-16 object-cover rounded-md';
+                previewItem.appendChild(img);
+            } else {
+                const icon = document.createElement('div');
+                icon.className = 'h-16 w-16 flex items-center justify-center bg-gray-200 rounded-md';
+                
+                if (file.type.startsWith('video/')) {
+                    icon.innerHTML = '<svg class="h-8 w-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14m-6 0l-4.553 2.276A1 1 0 013 15.382V8.618a1 1 0 011.447-.894L9 10m6 0v4m0 4H9m6-4H9"/></svg>';
+                } else {
+                    icon.innerHTML = '<svg class="h-8 w-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m-6-8h.01M13 12h.01M13 8h.01M7 20h10a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
+                }
+                
+                previewItem.appendChild(icon);
+            }
+
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'ml-4';
+            fileInfo.innerHTML = `
+                <div class="text-sm font-medium text-gray-700">${file.name}</div>
+                <div class="text-xs text-gray-500">${file.type.split('/').pop().toUpperCase()}</div>
+            `;
+
+            previewItem.appendChild(fileInfo);
+            preview.appendChild(previewItem);
+        }
+
+        // Update all file input event listeners
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(event) {
+                const preview = document.getElementById('image-preview');
+                preview.innerHTML = '';
+                Array.from(event.target.files).forEach(file => {
+                    createFilePreview(file);
+                });
             });
         });
     </script>
