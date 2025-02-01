@@ -16,12 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $password = Hash::make('password');
+
         // Create 3 tutors
         User::create([
             'name' => 'Tutor One',
             'username' => 'tutor1',
             'email' => 'tutor1@example.com',
-            'password' => Hash::make('password'),
+            'password' => $password,
             'role' => 'tutor',
             'is_admin' => false,
         ]);
@@ -30,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Tutor Two',
             'username' => 'tutor2',
             'email' => 'tutor2@example.com',
-            'password' => Hash::make('password'),
+            'password' => $password,
             'role' => 'tutor',
             'is_admin' => false,
         ]);
@@ -39,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Tutor Three',
             'username' => 'tutor3',
             'email' => 'tutor3@example.com',
-            'password' => Hash::make('password'),
+            'password' => $password,
             'role' => 'tutor',
             'is_admin' => false,
         ]);
@@ -50,7 +52,7 @@ class DatabaseSeeder extends Seeder
                 'name' => "Student $i",
                 'username' => "student$i",
                 'email' => "student$i@example.com",
-                'password' => Hash::make('password'),
+                'password' => $password,
                 'role' => 'student',
                 'is_admin' => false,
             ]);
@@ -61,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+            'password' => $password,
             'role' => 'tutor',
             'is_admin' => true,
         ]);
@@ -100,19 +102,6 @@ class DatabaseSeeder extends Seeder
             'tutor_id' => 1, // Assuming Tutor One has ID 1
         ]);
 
-        /**
-         * Assign students to sections.
-         * 
-         * This code assigns students to different sections by creating entries in the StudentInSection model.
-         * 
-         * The first loop assigns students with IDs 1 to 3 to the first section.
-         * The second loop assigns students with IDs 4 to 6 to the second section.
-         * The third loop assigns students with IDs 1 to 3 to the third section.
-         * The fourth loop assigns students with IDs 4 to 6 to the fourth section.
-         * 
-         * Each loop iterates over a range of student IDs and creates a new StudentInSection entry
-         * with the corresponding section ID and student ID.
-         */
         // Assign students to sections
         for ($i = 1; $i <= 3; $i++) {
             StudentInSection::create([

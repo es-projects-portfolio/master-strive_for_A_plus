@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('student_in_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->constrained('sections', 'section_id')->cascadeOnDelete();
-            $table->foreignId('student_id')->constrained('users', 'user_id')->cascadeOnDelete()->where('role', 'student');
+            $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('users')->cascadeOnDelete()->where('role', 'student');
             $table->timestamps();
         });
     }

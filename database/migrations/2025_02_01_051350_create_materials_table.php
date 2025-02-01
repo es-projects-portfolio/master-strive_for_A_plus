@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('materials', function (Blueprint $table) {
-            $table->id('material_id');
-            $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete()->where('role', 'tutor');
+            $table->id(); // Changed from $table->id('material_id');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->where('role', 'tutor');
             $table->boolean('visible_to_all')->default(false);
-            $table->foreignId('section_id')->nullable()->constrained('sections', 'section_id')->cascadeOnDelete();
+            $table->foreignId('section_id')->nullable()->constrained('sections')->cascadeOnDelete();
             $table->string('message');
             $table->string('image')->nullable();
             $table->string('video')->nullable();
