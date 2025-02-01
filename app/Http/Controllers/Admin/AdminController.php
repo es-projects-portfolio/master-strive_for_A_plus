@@ -12,6 +12,18 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     /**
+     * List all users, courses, and sections.
+     */
+    public function index()
+    {
+        $users = User::all();
+        $courses = Course::all();
+        $sections = Section::all();
+
+        return view('admin.index', compact('users', 'courses', 'sections'));
+    }
+
+    /**
      * Create a new course.
      */
     public function createCourse(Request $request)
@@ -24,7 +36,7 @@ class AdminController extends Controller
             'course_name' => $request->course_name,
         ]);
 
-        return response()->json($course, 201);
+        return redirect()->back()->with('success_course', 'Course created successfully!');
     }
 
     /**
@@ -34,19 +46,19 @@ class AdminController extends Controller
     {
         $request->validate([
             'section_number' => 'required|integer',
-            'course_id' => 'required|exists:courses,course_id',
-            'tutor_id' => 'required|exists:users,user_id',
+            'course_id' => 'required|exists:courses,id',
+            'tutor_id' => 'required|exists:users,id',
         ]);
 
-        $tutor = User::where('user_id', $request->tutor_id)->where('role', 'tutor')->firstOrFail();
+        $tutor = User::where('id', $request->tutor_id)->where('role', 'tutor')->firstOrFail();
 
         $section = Section::create([
             'section_number' => $request->section_number,
             'course_id' => $request->course_id,
-            'tutor_id' => $tutor->user_id,
+            'tutor_id' => $tutor->id,
         ]);
 
-        return response()->json($section, 201);
+        return redirect()->back()->with('success_section', 'Section created successfully!');
     }
 
     /**
@@ -55,21 +67,23 @@ class AdminController extends Controller
     public function assignStudentsToSection(Request $request)
     {
         $request->validate([
-            'section_id' => 'required|exists:sections,section_id',
-            'student_ids' => 'required|array',
-            'student_ids.*' => 'exists:users,user_id',
+            'section_id' => 'required|exists:sections,id',
+            'student_id' => 'required|array',
+            'student_id.*' => 'exists:users,id',
         ]);
 
         $section = Section::findOrFail($request->section_id);
 
-        foreach ($request->student_ids as $student_id) {
-            $student = User::where('user_id', $student_id)->where('role', 'student')->firstOrFail();
+        foreach ($request->student_id as $student_id) {
+            $student = User::where('id', $student_id)->where('role', 'student')->firstOrFail();
             StudentInSection::create([
-                'section_id' => $section->section_id,
-                'student_id' => $student->user_id,
+                'section_id' => $section->id,
+                'student_id' => $student->id,
             ]);
         }
 
-        return response()->json(['message' => 'Students assigned successfully'], 200);
+        return redirect()->back()->with('success_assign', 'Students assigned successfully!');
     }
+
+    
 }
