@@ -103,28 +103,28 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Assign students to sections
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 4; $i <= 6; $i++) {
             StudentInSection::create([
                 'section_id' => $section1->id,
                 'student_id' => $i,
             ]);
         }
 
-        for ($i = 4; $i <= 6; $i++) {
+        for ($i = 7; $i <= 9; $i++) {
             StudentInSection::create([
                 'section_id' => $section2->id,
                 'student_id' => $i,
             ]);
         }
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 4; $i <= 6; $i++) {
             StudentInSection::create([
                 'section_id' => $section3->id,
                 'student_id' => $i,
             ]);
         }
 
-        for ($i = 4; $i <= 6; $i++) {
+        for ($i = 7; $i <= 9; $i++) {
             StudentInSection::create([
                 'section_id' => $section4->id,
                 'student_id' => $i,
