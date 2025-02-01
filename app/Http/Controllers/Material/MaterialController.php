@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Section;
 use App\Models\Material;
 use Illuminate\View\View;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,24 +18,55 @@ class MaterialController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $user = Auth::user();
 
+        $query = Material::query();
+
         if ($user->role === 'tutor') {
             // Tutors can see all materials they created
-            $materials = Material::orderBy('created_at', 'desc')->get();
+            $query->orderBy('created_at', 'desc');
         } else {
             // Students can see materials visible to all or in their sections
-            $materials = Material::where('visible_to_all', true)
+            $query->where('visible_to_all', true)
                 ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
                     $query->where('student_id', $user->id);
                 })
-                ->orderBy('created_at', 'desc')
-                ->get();
+                ->orderBy('created_at', 'desc');
         }
 
-        return view('materials.index', ['materials' => $materials]);
+        // Apply filters
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->filled('course_section')) {
+            $query->where('section_id', $request->course_section);
+        }
+
+        if ($request->filled('visibility')) {
+            if ($request->visibility === 'public') {
+                $query->where('visible_to_all', true);
+            } else {
+                $query->where('visible_to_all', false);
+            }
+        }
+
+        if ($request->filled('author')) {
+            $query->where('user_id', $request->author);
+        }
+
+        $materials = $query->get();
+
+        $sections = Section::all();
+        $authors = User::where('role', 'tutor')->get();
+
+        return view('materials.index', [
+            'materials' => $materials,
+            'sections' => $sections,
+            'authors' => $authors,
+        ]);
     }
 
     /**

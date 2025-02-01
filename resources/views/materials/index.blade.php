@@ -4,7 +4,54 @@
             {{ __('Material') }}
         </h2>
     </x-slot>
-    
+    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <form method="GET" action="{{ route('materials.index') }}" class="mb-6">
+            <div class="flex flex-wrap gap-4">
+                <div class="flex-1 min-w-[150px]">
+                    <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
+                    <select name="category" id="category" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All Categories') }}</option>
+                        <option value="past-year">{{ __('Past Year') }}</option>
+                        <option value="assignment">{{ __('Assignment') }}</option>
+                        <option value="quiz">{{ __('Quiz') }}</option>
+                        <option value="exam">{{ __('Exam') }}</option>
+                        <option value="notes">{{ __('Notes') }}</option>
+                        <option value="announcement">{{ __('Announcement') }}</option>
+                    </select>
+                </div>
+                <div class="flex-1.5 min-w-[200px]">
+                    <label for="course_section" class="block text-sm font-medium text-gray-700">{{ __('Course & Section') }}</label>
+                    <select name="course_section" id="course_section" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All Courses & Sections') }}</option>
+                        @foreach ($sections as $section)
+                            <option value="{{ $section->id }}">{{ $section->course->course_name }} | Section {{ $section->section_number }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex-0.5 min-w-[100px]">
+                    <label for="visibility" class="block text-sm font-medium text-gray-700">{{ __('Visibility') }}</label>
+                    <select name="visibility" id="visibility" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All') }}</option>
+                        <option value="public">{{ __('Public') }}</option>
+                        <option value="private">{{ __('Private') }}</option>
+                    </select>
+                </div>
+                <div class="flex-1 min-w-[150px]">
+                    <label for="author" class="block text-sm font-medium text-gray-700">{{ __('Author') }}</label>
+                    <select name="author" id="author" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All Authors') }}</option>
+                        @foreach ($authors as $author)
+                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="mt-4">
+                <x-primary-button>{{ __('Filter') }}</x-primary-button>
+            </div>
+        </form>
+    </div>
+
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <div class="mt-6 bg-gray-100 rounded-lg divide-y">
             @foreach ($materials as $material)
