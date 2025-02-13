@@ -8,9 +8,9 @@
         <form method="GET" action="{{ route('materials.index') }}" class="mb-6">
             <div class="flex flex-wrap gap-4">
                 <div class="flex-1 min-w-[150px]">
-                    <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
-                    <select name="category" id="category" class="block w-full mt-1 text-sm rounded-md">
-                        <option value="">{{ __('All Categories') }}</option>
+                    <label for="tag" class="block text-sm font-medium text-gray-700">{{ __('Tag') }}</label>
+                    <select name="tag" id="tag" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All Tags') }}</option>
                         <option value="past-year">{{ __('Past Year') }}</option>
                         <option value="assignment">{{ __('Assignment') }}</option>
                         <option value="quiz">{{ __('Quiz') }}</option>
@@ -36,6 +36,8 @@
                         <option value="private">{{ __('Private') }}</option>
                     </select>
                 </div>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-4">
                 <div class="flex-1 min-w-[150px]">
                     <label for="author" class="block text-sm font-medium text-gray-700">{{ __('Author') }}</label>
                     <select name="author" id="author" class="block w-full mt-1 text-sm rounded-md">
@@ -43,6 +45,22 @@
                         @foreach ($authors as $author)
                             <option value="{{ $author->id }}">{{ $author->name }}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="flex-1 min-w-[150px]">
+                    <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
+                    <select name="category" id="category" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="">{{ __('All Categories') }}</option>
+                        <option value="primary">{{ __('Primary') }}</option>
+                        <option value="lower_secondary">{{ __('Lower Secondary') }}</option>
+                        <option value="upper_secondary">{{ __('Upper Secondary') }}</option>
+                    </select>
+                </div>
+                <div class="flex-1 min-w-[150px]">
+                    <label for="sort" class="block text-sm font-medium text-gray-700">{{ __('Sort By') }}</label>
+                    <select name="sort" id="sort" class="block w-full mt-1 text-sm rounded-md">
+                        <option value="desc">{{ __('Newest First') }}</option>
+                        <option value="asc">{{ __('Oldest First') }}</option>
                     </select>
                 </div>
             </div>
@@ -70,6 +88,8 @@
                                 <div class="text-sm text-gray-600">
                                     @if ($material->visible_to_all)
                                         {{ __('Public') }}
+                                    @elseif ($material->category)
+                                        {{ ucfirst($material->category) }}
                                     @else
                                         {{ $material->section->course->course_name }} | Section {{ $material->section->section_number }}
                                     @endif
@@ -128,7 +148,7 @@
                         @endif
                         <div class="text-right mt-4">
                             <span class="inline-flex items-center border rounded-md px-3 py-1 text-xs font-light lowercase 
-                                @switch($material->category)
+                                @switch($material->tag)
                                     @case('past-year') bg-blue-100 text-blue-800 @break
                                     @case('assignment') bg-green-100 text-green-800 @break
                                     @case('quiz') bg-yellow-100 text-yellow-800 @break
@@ -137,7 +157,7 @@
                                     @case('announcement') bg-pink-100 text-pink-800 @break
                                     @default bg-gray-100 text-gray-800
                                 @endswitch">
-                                {{ $material->category }}
+                                {{ $material->tag }}
                             </span>
                         </div>
                     </div>

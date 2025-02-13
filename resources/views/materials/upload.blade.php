@@ -58,6 +58,17 @@
                 </div>
             </div>
 
+            <!-- Category -->
+            <div class="mt-4" id="category-field" style="display: none;">
+                <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
+                <select id="category" name="category" class="rounded" onchange="toggleSectionField()">
+                    <option value="primary">{{ __('Primary') }}</option>
+                    <option value="lower_secondary">{{ __('Lower Secondary') }}</option>
+                    <option value="upper_secondary">{{ __('Upper Secondary') }}</option>
+                    <option value="">{{ __('Selected Section') }}</option>
+                </select>
+            </div>
+
             <div class="mt-4" id="section-field" style="display: none;">
                 <label for="section_id" class="block text-sm font-medium text-gray-700">{{ __('Section') }}</label>
                 <select id="section_id" name="section_id" class="rounded">
@@ -68,16 +79,16 @@
             </div>
             
             <div class="mt-4">
-                <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
+                <label for="tag" class="block text-sm font-medium text-gray-700">{{ __('Tag') }}</label>
                 <div class="grid grid-cols-2 gap-3 mr-2">
-                    @foreach(['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement'] as $category)
+                    @foreach(['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement'] as $tag)
                         <label class="inline-flex items-center">
-                            <input type="radio" name="category" value="{{ $category }}" class="form-radio text-gray-700" {{ old('category') == $category ? 'checked' : '' }} required>
-                            <span class="ml-2 px-2">{{ ucfirst($category) }}</span>
+                            <input type="radio" name="tag" value="{{ $tag }}" class="form-radio text-gray-700" {{ old('tag') == $tag ? 'checked' : '' }} required>
+                            <span class="ml-2 px-2">{{ ucfirst($tag) }}</span>
                         </label>
                     @endforeach
                 </div>
-                <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                <x-input-error :messages="$errors->get('tag')" class="mt-2" />
             </div>
 
             <!-- Error messages and preview section -->
@@ -88,13 +99,26 @@
     </div>
     <script>
         document.getElementById('visible_to_all').addEventListener('change', function(event) {
+            const categoryField = document.getElementById('category-field');
             const sectionField = document.getElementById('section-field');
             if (event.target.checked) {
+                categoryField.style.display = 'none';
                 sectionField.style.display = 'none';
             } else {
-                sectionField.style.display = 'block';
+                categoryField.style.display = 'block';
+                toggleSectionField();
             }
         });
+
+        function toggleSectionField() {
+            const category = document.getElementById('category').value;
+            const sectionField = document.getElementById('section-field');
+            if (category === '') {
+                sectionField.style.display = 'block';
+            } else {
+                sectionField.style.display = 'none';
+            }
+        }
 
         document.getElementById('image-input').addEventListener('change', function(event) {
             const preview = document.getElementById('image-preview');
@@ -155,6 +179,15 @@
                     createFilePreview(file);
                 });
             });
+        });
+
+        // Initialize the fields visibility based on the default selected values
+        document.addEventListener('DOMContentLoaded', function() {
+            const visibleToAllCheckbox = document.getElementById('visible_to_all');
+            if (!visibleToAllCheckbox.checked) {
+                document.getElementById('category-field').style.display = 'block';
+                toggleSectionField();
+            }
         });
     </script>
 </x-app-layout>

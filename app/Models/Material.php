@@ -9,12 +9,13 @@ class Material extends Model
 {
     protected $fillable = [
         'visible_to_all',
+        'category',
         'section_id',
         'message',
         'image',
         'video',
         'file_path',
-        'category',
+        'tag',
     ];
 
     public function user(): BelongsTo

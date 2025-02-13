@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['student', 'tutor'])->default('student');
             $table->boolean('is_admin')->default(false);
+            $table->enum('category', ['primary', 'lower_secondary', 'upper_secondary'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

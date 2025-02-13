@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id(); // Changed from $table->id('material_id');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->where('role', 'tutor');
             $table->boolean('visible_to_all')->default(false);
+            $table->enum('category', ['primary', 'lower_secondary', 'upper_secondary'])->nullable();
             $table->foreignId('section_id')->nullable()->constrained('sections')->cascadeOnDelete();
             $table->string('message');
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->string('file_path')->nullable();
-            $table->enum('category', ['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement']);
+            $table->enum('tag', ['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement']);
             $table->timestamps();
         });
     }

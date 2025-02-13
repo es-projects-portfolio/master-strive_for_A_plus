@@ -36,6 +36,9 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'in:student,tutor'],
+            'category' => $request->role === 'student'
+                ? ['required', 'in:primary,lower_secondary,upper_secondary']
+                : ['nullable', 'in:primary,lower_secondary,upper_secondary'],
         ]);
 
         try {
@@ -45,6 +48,9 @@ class RegisteredUserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
+                'category' => $request->role === 'student'
+                    ? $request->category
+                    : null,
             ]);
 
             event(new Registered($user));

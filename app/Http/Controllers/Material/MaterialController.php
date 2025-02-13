@@ -26,19 +26,20 @@ class MaterialController extends Controller
 
         if ($user->role === 'tutor') {
             // Tutors can see all materials they created
-            $query->orderBy('created_at', 'desc');
+            //$query->orderBy('created_at', 'desc');
         } else {
             // Students can see materials visible to all or in their sections
-            $query->where('visible_to_all', true)
-                ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
-                    $query->where('student_id', $user->id);
-                })
-                ->orderBy('created_at', 'desc');
+            $query->where(function ($query) use ($user) {
+                $query->where('visible_to_all', true)
+                    ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
+                        $query->where('student_id', $user->id);
+                    });
+            });
         }
 
         // Apply filters
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('tag')) {
+            $query->where('tag', $request->tag);
         }
 
         if ($request->filled('course_section')) {
@@ -56,6 +57,14 @@ class MaterialController extends Controller
         if ($request->filled('author')) {
             $query->where('user_id', $request->author);
         }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Apply sorting
+        $sortOrder = $request->get('sort', 'desc');
+        $query->orderBy('created_at', $sortOrder);
 
         $materials = $query->get();
 
@@ -104,16 +113,31 @@ class MaterialController extends Controller
         // Validate the request data
         $validated = $request->validate([
             'visible_to_all' => 'nullable|boolean',
+            'category' => 'nullable|in:primary,lower_secondary,upper_secondary',
             'section_id' => 'nullable|exists:sections,id',
             'message' => 'required|string|max:255',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
             'file_path' => 'nullable|file|mimes:csv,json,pdf,docx,xlsx|max:5120',
-            'category' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
+            'tag' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
         ]);
 
         // Set visibility to 'all' if checkbox is checked
         $validated['visible_to_all'] = $request->has('visible_to_all');
+
+        // Ensure category and section_id are set correctly
+        if ($validated['visible_to_all']) {
+            $validated['category'] = null;
+            $validated['section_id'] = null;
+        } else {
+            if ($validated['category']) {
+                $validated['section_id'] = null;
+            } else {
+                $request->validate([
+                    'section_id' => 'required|exists:sections,id',
+                ]);
+            }
+        }
 
         // Store the uploaded files
         if ($request->hasFile('image')) {
@@ -212,16 +236,31 @@ class MaterialController extends Controller
         // Validate the request data
         $validated = $request->validate([
             'visible_to_all' => 'nullable|boolean',
+            'category' => 'nullable|in:primary,lower_secondary,upper_secondary',
             'section_id' => 'nullable|exists:sections,id',
             'message' => 'required|string|max:255',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
             'file_path' => 'nullable|file|mimes:csv,json,pdf,docx,xlsx|max:5120',
-            'category' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
+            'tag' => 'required|in:past-year,assignment,quiz,exam,notes,announcement',
         ]);
 
         // Set visibility to 'all' if checkbox is checked
         $validated['visible_to_all'] = $request->has('visible_to_all');
+
+        // Ensure category and section_id are set correctly
+        if ($validated['visible_to_all']) {
+            $validated['category'] = null;
+            $validated['section_id'] = null;
+        } else {
+            if ($validated['category']) {
+                $validated['section_id'] = null;
+            } else {
+                $request->validate([
+                    'section_id' => 'required|exists:sections,id',
+                ]);
+            }
+        }
 
         // Store the uploaded files
         if ($request->hasFile('image')) {
