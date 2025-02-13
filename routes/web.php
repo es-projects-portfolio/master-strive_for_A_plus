@@ -11,11 +11,13 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
     } else {
-        return redirect('/login');
+        return redirect('/materials');
     }
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,7 +31,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/assign-student-to-section', [AdminController::class, 'assignStudentsToSection'])->name('admin.assignStudentToSection');
 
     // Material routes
-    Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
     Route::get('/materials/create', [MaterialController::class, 'create'])->name('materials.create');
     Route::post('/materials', [MaterialController::class, 'store'])->name('materials.store');
     Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');

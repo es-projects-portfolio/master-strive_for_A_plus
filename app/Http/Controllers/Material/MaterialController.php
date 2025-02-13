@@ -20,20 +20,37 @@ class MaterialController extends Controller
      */
     public function index(Request $request): View
     {
-        $user = Auth::user();
-
         $query = Material::query();
 
-        if ($user->role === 'tutor') {
-            // Tutors can see all materials they created
-            //$query->orderBy('created_at', 'desc');
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->role === 'tutor') {
+                // Tutors can see all materials they created
+                
+            } else {
+                // Students can see materials based on the specified conditions
+                $query->where(function ($query) use ($user) {
+                    $query->where('visible_to_all', true)
+                        ->orWhere(function ($query) use ($user) {
+                            $query->where('visible_to_all', false)
+                                  ->whereNotNull('category');
+                        })
+                        ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
+                            $query->where('student_id', $user->id);
+                        });
+                });
+            }
         } else {
-            // Students can see materials visible to all or in their sections
-            $query->where(function ($query) use ($user) {
-                $query->where('visible_to_all', true)
-                    ->orWhereHas('section.studentsInSection', function ($query) use ($user) {
-                        $query->where('student_id', $user->id);
-                    });
+            // Unauthenticated users can see materials based on the specified conditions
+            $query->where(function ($query) {
+                $query->where('visible_to_all', false)
+                      ->whereNotNull('category')
+                      ->orWhere(function ($query) {
+                          $query->where('visible_to_all', true)
+                                ->whereNull('category')
+                                ->whereNull('section_id');
+                      });
             });
         }
 

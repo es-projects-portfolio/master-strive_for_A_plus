@@ -1,10 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Material') }}
-        </h2>
-    </x-slot>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+    @if (auth()->check())
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Material') }}
+            </h2>
+        </x-slot>
+    @else
+        <x-slot name="header">
+            <div class="text-center py-4">
+                <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Welcome to the StriveForA+') }}
+                </h1>
+                <p class="text-gray-600 my-4">{{ __('Join us to enhance your learning experience with top-notch educational materials') }}</p>               
+            </div>
+        </x-slot>
+    @endif
+    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 mt-4">
         <form method="GET" action="{{ route('materials.index') }}" class="mb-6">
             <div class="flex flex-wrap gap-4">
                 <div class="flex-1 min-w-[150px]">
@@ -19,15 +30,17 @@
                         <option value="announcement">{{ __('Announcement') }}</option>
                     </select>
                 </div>
-                <div class="flex-1.5 min-w-[200px]">
-                    <label for="course_section" class="block text-sm font-medium text-gray-700">{{ __('Course & Section') }}</label>
-                    <select name="course_section" id="course_section" class="block w-full mt-1 text-sm rounded-md">
-                        <option value="">{{ __('All Courses & Sections') }}</option>
-                        @foreach ($sections as $section)
-                            <option value="{{ $section->id }}">{{ $section->course->course_name }} | Section {{ $section->section_number }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                @if (auth()->check())
+                    <div class="flex-1.5 min-w-[200px]">
+                        <label for="course_section" class="block text-sm font-medium text-gray-700">{{ __('Course & Section') }}</label>
+                        <select name="course_section" id="course_section" class="block w-full mt-1 text-sm rounded-md">
+                            <option value="">{{ __('All Courses & Sections') }}</option>
+                            @foreach ($sections as $section)
+                                <option value="{{ $section->id }}">{{ $section->course->course_name }} | Section {{ $section->section_number }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
                 <div class="flex-0.5 min-w-[100px]">
                     <label for="visibility" class="block text-sm font-medium text-gray-700">{{ __('Visibility') }}</label>
                     <select name="visibility" id="visibility" class="block w-full mt-1 text-sm rounded-md">
