@@ -101,8 +101,8 @@
                                 <div class="text-sm text-gray-600">
                                     @if ($material->visible_to_all)
                                         {{ __('Public') }}
-                                    @elseif ($material->category)
-                                        {{ ucfirst($material->category) }}
+                                    @elseif (in_array($material->category, ['primary', 'lower_secondary', 'upper_secondary']))
+                                        {{ __('Category: ') . ucfirst(str_replace('_', ' ', $material->category)) }}
                                     @else
                                         {{ $material->section->course->course_name }} | Section {{ $material->section->section_number }}
                                     @endif
