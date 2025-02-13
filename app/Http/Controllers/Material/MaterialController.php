@@ -17,6 +17,8 @@ class MaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * Adds a concise explanation of how materials are filtered and shown.
+     * Note: Applies visibility rules for tutors, students, or guests.
      */
     public function index(Request $request): View
     {
@@ -97,6 +99,8 @@ class MaterialController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * Notes that only tutors can access this form.
+     * Note: Redirects non-tutors back with an error message.
      */
     public function create(): View
     {
@@ -116,6 +120,8 @@ class MaterialController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * Explains how material data is validated and saved.
+     * Note: Checks tutor role, saves uploaded files, and creates a record.
      * 
      * @param Request $request
      * @return RedirectResponse
@@ -188,6 +194,8 @@ class MaterialController extends Controller
 
     /**
      * Display the specified resource.
+     * Adds a note about material visibility checks.
+     * Note: Restricts viewing to rightful users (public, tutor, etc.).
      */
     public function show(Material $material): View
     {
@@ -215,6 +223,8 @@ class MaterialController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * Adds a short comment about tutor-only editing access.
+     * Note: Redirects if the user is not a tutor or unauthorized.
      */
     public function edit(Material $material): View
     {
@@ -239,6 +249,8 @@ class MaterialController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * Describes how updated data is validated and stored.
+     * Note: Checks tutor role, validates input, and updates material info.
      */
     public function update(Request $request, Material $material): RedirectResponse
     {
@@ -311,6 +323,8 @@ class MaterialController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * Explains tutor-only deletion capability.
+     * Note: Ensures the user has the correct role before deleting.
      */
     public function destroy(Material $material): RedirectResponse
     {

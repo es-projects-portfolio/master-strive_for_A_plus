@@ -51,16 +51,31 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get the materials created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function materials(): HasMany
     {
         return $this->hasMany(Material::class);
     }
 
+    /**
+     * Get the sections where the user is a tutor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
     }
 
+    /**
+     * Get the sections where the user is a student.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function studentsInSection(): HasMany
     {
         return $this->hasMany(StudentInSection::class, 'student_id');

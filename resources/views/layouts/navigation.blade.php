@@ -1,3 +1,30 @@
+<!-- /**
+ * This Blade template defines the navigation layout for the application.
+ * 
+ * The navigation bar includes:
+ * - A logo that links to the dashboard.
+ * - Navigation links that are conditionally displayed based on the user's authentication status and role.
+ * - A settings dropdown for authenticated users to access their profile and log out.
+ * - Registration and login buttons for unauthenticated users.
+ * - A responsive menu for smaller screens that includes the same links and settings options.
+ * 
+ * The navigation links include:
+ * - Dashboard: Visible to authenticated users.
+ * - Admin: Visible to authenticated users with the 'is_admin' attribute.
+ * - Upload: Visible to authenticated users with the 'tutor' role.
+ * - Material: Visible to all users.
+ * 
+ * The settings dropdown includes:
+ * - Profile: Links to the profile edit page.
+ * - Log Out: Logs the user out.
+ * 
+ * The responsive menu includes:
+ * - The same navigation links as the primary menu.
+ * - The same settings options as the primary menu.
+ * 
+ * The navigation bar uses Alpine.js for handling the responsive menu toggle.
+ */ -->
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

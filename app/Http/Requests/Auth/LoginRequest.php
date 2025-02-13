@@ -13,6 +13,8 @@ class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     * Adds a brief explanation of authorization logic.
+     * Note: This always returns true to allow login attempts.
      */
     public function authorize(): bool
     {
@@ -21,6 +23,8 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * Adds a one-liner about login validation rules.
+     * Note: The 'login' and 'password' fields are required strings.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -34,6 +38,8 @@ class LoginRequest extends FormRequest
 
     /**
      * Attempt to authenticate the request's credentials.
+     * Adds a note about verifying user credentials.
+     * Note: Determines login type, checks auth, updates rate limiters.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -56,6 +62,8 @@ class LoginRequest extends FormRequest
 
     /**
      * Ensure the login request is not rate limited.
+     * Adds a note about throttling and rate limit checks.
+     * Note: Throws validation exception if too many attempts are made.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -79,6 +87,8 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the rate limiting throttle key for the request.
+     * Adds a note about identifying user requests for throttling.
+     * Note: Uses user login string and IP to create a unique key.
      */
     public function throttleKey(): string
     {

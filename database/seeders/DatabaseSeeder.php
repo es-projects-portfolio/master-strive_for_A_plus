@@ -14,7 +14,17 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * 
+     * This seeder creates:
+     * - 3 tutors
+     * - 6 students
+     * - 1 admin
+     * - 2 courses
+     * - 4 sections (2 for each course)
+     * - Assigns students to sections
+     * - Creates materials for the sections
      */
+    
     public function run(): void
     {
         $password = Hash::make('password');

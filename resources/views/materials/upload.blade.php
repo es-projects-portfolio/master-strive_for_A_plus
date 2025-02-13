@@ -1,3 +1,30 @@
+
+ <!-- * Blade template for uploading materials.
+ * 
+ * This template provides a form for users to upload various types of materials such as images, videos, and files.
+ * It includes fields for entering a message, selecting visibility options, choosing a category and section, and tagging the material.
+ * 
+ * Components and functionalities:
+ * - Header with the title "Upload Material".
+ * - Form with POST method to submit data to the 'materials.store' route.
+ * - Textarea for entering a message.
+ * - Buttons for uploading images, videos, and files with corresponding file input fields.
+ * - Visibility checkbox to toggle between "All" and specific categories/sections.
+ * - Dropdowns for selecting category and section, which are conditionally displayed based on the visibility checkbox.
+ * - Radio buttons for tagging the material with predefined tags.
+ * - Preview section for displaying selected files before uploading.
+ * - JavaScript for handling dynamic visibility of fields, file previews, and form interactions.
+ * 
+ * Variables:
+ * - $sections: Collection of sections to populate the section dropdown.
+ * - $errors: Error messages for form validation.
+ * 
+ * JavaScript functions:
+ * - toggleSectionField: Toggles the visibility of the section field based on the selected category.
+ * - createFilePreview: Creates a preview of the selected file (image, video, or other types).
+ * - Event listeners for handling changes in visibility checkbox and file inputs.
+ */ -->
+ 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

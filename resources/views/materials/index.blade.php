@@ -1,3 +1,27 @@
+<!-- /**
+ * This Blade template is used to display a list of educational materials.
+ * 
+ * It includes the following sections:
+ * 
+ * 1. Header Section:
+ *    - Displays a welcome message for unauthenticated users.
+ *    - Displays the "Material" header for authenticated users.
+ * 
+ * 2. Filter Form:
+ *    - Allows users to filter materials by tag, course & section, visibility, author, category, and sort order.
+ *    - The form submits a GET request to the 'materials.index' route.
+ * 
+ * 3. Materials List:
+ *    - Displays a list of materials with details such as author, creation date, visibility, category, and associated course & section.
+ *    - Each material includes options to edit or delete if the current user is the author.
+ *    - Materials can include text messages, images, videos, and downloadable files.
+ *    - Tags are displayed with different background colors based on their type.
+ * 
+ * Variables:
+ * - $sections: A collection of course sections available for filtering.
+ * - $authors: A collection of authors available for filtering.
+ * - $materials: A collection of materials to be displayed.
+ */  -->
 <x-app-layout>
     @if (auth()->check())
         <x-slot name="header">

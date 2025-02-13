@@ -9,6 +9,11 @@ class Course extends Model
 {
     protected $fillable = ['course_name'];
     
+    /**
+     * Get the sections for the course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
