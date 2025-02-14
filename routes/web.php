@@ -1,36 +1,3 @@
-<!-- #**
- * Web Routes
- * 
- * This file contains the route definitions for the web application.
- * 
- * Routes:
- * - GET /: Redirects to /dashboard if authenticated, otherwise to /materials.
- * - GET /dashboard: Displays the dashboard, requires authentication.
- * - GET /materials: Displays the list of materials.
- * 
- * Authenticated and Verified Routes:
- * - GET /profile: Displays the profile edit form.
- * - PATCH /profile: Updates the profile information.
- * - DELETE /profile: Deletes the profile.
- * 
- * Admin Routes:
- * - GET /admin: Displays the admin dashboard.
- * - POST /admin/create-course: Creates a new course.
- * - POST /admin/create-section: Creates a new section.
- * - POST /admin/assign-student-to-section: Assigns students to a section.
- * 
- * Material Routes:
- * - GET /materials/create: Displays the material creation form.
- * - POST /materials: Stores a new material.
- * - GET /materials/{material}: Displays a specific material.
- * - GET /materials/{material}/edit: Displays the material edit form.
- * - PATCH /materials/{material}: Updates a specific material.
- * - DELETE /materials/{material}: Deletes a specific material.
- * 
- * Additional Routes:
- * - Requires additional authentication routes from auth.php.
- */ -->
-
 <?php
 
 use Illuminate\Support\Facades\Auth;
