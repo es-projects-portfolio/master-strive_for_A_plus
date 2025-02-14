@@ -13,8 +13,9 @@ class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * Adds a brief explanation of authorization logic.
-     * Note: This always returns true to allow login attempts.
+     * Always returns true to allow login attempts.
+     * Example:
+     * - Any user attempting to log in will be authorized to make this request.
      */
     public function authorize(): bool
     {
@@ -23,8 +24,9 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     * Adds a one-liner about login validation rules.
-     * Note: The 'login' and 'password' fields are required strings.
+     * Specifies the validation rules for login.
+     * Example:
+     * - The 'login' and 'password' fields are required strings.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -38,8 +40,11 @@ class LoginRequest extends FormRequest
 
     /**
      * Attempt to authenticate the request's credentials.
-     * Adds a note about verifying user credentials.
-     * Note: Determines login type, checks auth, updates rate limiters.
+     * Verifies user credentials and handles authentication.
+     * Examples:
+     * - Determines if the login is an email or username.
+     * - Attempts to authenticate the user with the provided credentials.
+     * - Updates rate limiters based on the authentication attempt.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -62,8 +67,10 @@ class LoginRequest extends FormRequest
 
     /**
      * Ensure the login request is not rate limited.
-     * Adds a note about throttling and rate limit checks.
-     * Note: Throws validation exception if too many attempts are made.
+     * Checks for too many login attempts and handles throttling.
+     * Examples:
+     * - Throws a validation exception if too many attempts are made.
+     * - Calculates the remaining time before the user can attempt to log in again.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -87,8 +94,9 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the rate limiting throttle key for the request.
-     * Adds a note about identifying user requests for throttling.
-     * Note: Uses user login string and IP to create a unique key.
+     * Identifies user requests for throttling.
+     * Example:
+     * - Uses the user's login string and IP address to create a unique key.
      */
     public function throttleKey(): string
     {

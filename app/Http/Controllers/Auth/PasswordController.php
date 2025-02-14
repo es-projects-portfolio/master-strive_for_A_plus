@@ -12,6 +12,10 @@ class PasswordController extends Controller
 {
     /**
      * Update the user's password.
+     * Validates the current and new passwords, then updates the password.
+     * Examples:
+     * - User provides their current password and a new password.
+     * - The system validates the current password and updates it with the new one.
      */
     public function update(Request $request): RedirectResponse
     {

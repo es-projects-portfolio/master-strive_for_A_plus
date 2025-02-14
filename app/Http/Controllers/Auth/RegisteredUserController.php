@@ -17,8 +17,9 @@ class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
-     * Adds a brief note about showing registration form.
-     * Note: Shows the form where new users can register.
+     * Shows the form where new users can register.
+     * Example:
+     * - A user navigates to the registration page to create a new account.
      */
     public function create(): View
     {
@@ -27,8 +28,11 @@ class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     * Adds a note on creating a new user and authenticating.
-     * Note: Validates input fields, creates a new user, then logs them in.
+     * Validates input fields, creates a new user, then logs them in.
+     * Examples:
+     * - Validates user input such as name, email, and password.
+     * - Creates a new user record in the database.
+     * - Logs the user in and redirects to the dashboard.
      *
      * @throws \Illuminate\Validation\ValidationException
      */

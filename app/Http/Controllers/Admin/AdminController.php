@@ -13,8 +13,9 @@ class AdminController extends Controller
 {
     /**
      * List all users, courses, and sections.
-     * Adds a quick note on displaying admin data.
-     * Note: Fetches all items for the admin view.
+     * Fetches all items for the admin view.
+     * Examples:
+     * - Displays a list of all users, courses, and sections in the admin dashboard.
      */
     public function index()
     {
@@ -27,8 +28,9 @@ class AdminController extends Controller
 
     /**
      * Create a new course.
-     * Adds a short summary about course creation.
-     * Note: Validates 'course_name' and stores a new course record.
+     * Validates 'course_name' and stores a new course record.
+     * Examples:
+     * - Admin enters a course name and submits the form to create a new course.
      */
     public function createCourse(Request $request)
     {
@@ -45,8 +47,9 @@ class AdminController extends Controller
 
     /**
      * Create a new section for a course.
-     * Explains how section is validated and persisted.
-     * Note: Validates the form, checks tutor role, then creates the section.
+     * Validates the form, checks tutor role, then creates the section.
+     * Examples:
+     * - Admin selects a course, assigns a tutor, and specifies a section number to create a new section.
      */
     public function createSection(Request $request)
     {
@@ -69,8 +72,9 @@ class AdminController extends Controller
 
     /**
      * Assign students to a section.
-     * Adds a pointer to how students are linked to sections.
-     * Note: Validates the section and student array, then attaches them.
+     * Validates the section and student array, then attaches them.
+     * Examples:
+     * - Admin selects a section and assigns multiple students to it.
      */
     public function assignStudentsToSection(Request $request)
     {
@@ -92,6 +96,4 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success_assign', 'Students assigned successfully!');
     }
-
-    
 }

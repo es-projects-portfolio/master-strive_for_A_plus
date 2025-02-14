@@ -13,6 +13,9 @@ class ConfirmablePasswordController extends Controller
 {
     /**
      * Show the confirm password view.
+     * Displays a form where users can confirm their password.
+     * Example:
+     * - User is prompted to confirm their password before accessing sensitive actions.
      */
     public function show(): View
     {
@@ -21,6 +24,10 @@ class ConfirmablePasswordController extends Controller
 
     /**
      * Confirm the user's password.
+     * Validates the user's password and confirms it.
+     * Examples:
+     * - User enters their password to confirm their identity.
+     * - The system validates the password and grants access to the intended route.
      */
     public function store(Request $request): RedirectResponse
     {
