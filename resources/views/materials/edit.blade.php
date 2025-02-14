@@ -1,18 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Upload Material') }}
-        </h2>
-    </x-slot>
-    
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('materials.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('materials.update', $material) }}" enctype="multipart/form-data">
             @csrf
+            @method('patch')
+            <input type="hidden" name="material_id" value="{{ $material->id }}">
             <textarea
                 name="message"
-                placeholder="{{ __('What\'s on your mind?') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >{{ old('message') }}</textarea>
+            >{{ old('message', $material->message) }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
 
             <div class="flex space-x-2 mt-2">
@@ -53,7 +48,7 @@
             <div class="mt-4">
                 <label for="visible_to_all" class="block text-sm font-medium text-gray-700">{{ __('Visibility') }}</label>
                 <div class="flex items-center">
-                    <input type="checkbox" name="visible_to_all" id="visible_to_all" value="1" class="text-sm text-gray-700 mr-4 px-2" checked>
+                    <input type="checkbox" name="visible_to_all" id="visible_to_all" value="1" class="text-sm text-gray-700 mr-4 px-2" {{ $material->visible_to_all ? 'checked' : '' }}>
                     <label for="visible_to_all" class="text-sm text-gray-700 px-2">{{ __('All') }}</label>
                 </div>
             </div>
@@ -62,10 +57,10 @@
             <div class="mt-4" id="category-field" style="display: none;">
                 <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
                 <select id="category" name="category" class="rounded" onchange="toggleSectionField()">
-                    <option value="primary">{{ __('Primary') }}</option>
-                    <option value="lower_secondary">{{ __('Lower Secondary') }}</option>
-                    <option value="upper_secondary">{{ __('Upper Secondary') }}</option>
-                    <option value="">{{ __('Selected Section') }}</option>
+                    <option value="primary" {{ $material->category == 'primary' ? 'selected' : '' }}>{{ __('Primary') }}</option>
+                    <option value="lower_secondary" {{ $material->category == 'lower_secondary' ? 'selected' : '' }}>{{ __('Lower Secondary') }}</option>
+                    <option value="upper_secondary" {{ $material->category == 'upper_secondary' ? 'selected' : '' }}>{{ __('Upper Secondary') }}</option>
+                    <option value="" {{ $material->category == '' ? 'selected' : '' }}>{{ __('Selected Section') }}</option>
                 </select>
             </div>
 
@@ -73,7 +68,7 @@
                 <label for="section_id" class="block text-sm font-medium text-gray-700">{{ __('Section') }}</label>
                 <select id="section_id" name="section_id" class="rounded">
                     @foreach($sections as $section)
-                        <option value="{{ $section->id }}">{{ $section->course->course_name }} | Section {{ $section->section_number }}</option>
+                        <option value="{{ $section->id }}" {{ $material->section_id == $section->id ? 'selected' : '' }}>{{ $section->course->course_name }} | Section {{ $section->section_number }}</option>
                     @endforeach
                 </select>
             </div>
@@ -83,7 +78,7 @@
                 <div class="grid grid-cols-2 gap-3 mr-2">
                     @foreach(['past-year', 'assignment', 'quiz', 'exam', 'notes', 'announcement'] as $tag)
                         <label class="inline-flex items-center">
-                            <input type="radio" name="tag" value="{{ $tag }}" class="form-radio text-gray-700" {{ old('tag') == $tag ? 'checked' : '' }} required>
+                            <input type="radio" name="tag" value="{{ $tag }}" class="form-radio text-gray-700" {{ old('tag', $material->tag) == $tag ? 'checked' : '' }} required>
                             <span class="ml-2 px-2">{{ ucfirst($tag) }}</span>
                         </label>
                     @endforeach
@@ -94,7 +89,8 @@
             <!-- Error messages and preview section -->
             <div id="image-preview" class="mt-4 space-y-2"></div>
             
-            <x-primary-button class="mt-4">{{ __('Upload') }}</x-primary-button>
+            <x-primary-button class="mt-4">{{ __('Save') }}</x-primary-button>
+            <a href="{{ route('materials.index') }}" class="mt-4">{{ __('Cancel') }}</a>
         </form>
     </div>
     <script>

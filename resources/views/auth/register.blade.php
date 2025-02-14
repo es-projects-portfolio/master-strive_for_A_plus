@@ -1,38 +1,3 @@
-<!-- /**
- * This Blade template renders the registration form for new users.
- * 
- * The form includes fields for:
- * - Name
- * - Username
- * - Email Address
- * - Password
- * - Confirm Password
- * - Role (Student or Tutor)
- * - Category (Primary, Lower Secondary, Upper Secondary) - visible only if the role is 'Student'
- * 
- * The form uses Laravel Blade components for input fields, labels, and error messages.
- * 
- * JavaScript is used to toggle the visibility of the Category field based on the selected Role.
- * 
- * @component x-guest-layout
- * @method POST
- * @action route('register')
- * @csrf
- * 
- * @field name (text, required, autofocus, autocomplete="name")
- * @field username (text, required, autocomplete="username")
- * @field email (email, required, autocomplete="username")
- * @field password (password, required, autocomplete="new-password")
- * @field password_confirmation (password, required, autocomplete="new-password")
- * @field role (select, required, options: ['student', 'tutor'], onchange="toggleCategoryField()")
- * @field category (select, options: ['primary', 'lower_secondary', 'upper_secondary'])
- * 
- * @link route('login') - Link to the login page for users who are already registered.
- * 
- * @script toggleCategoryField - Toggles the visibility of the Category field based on the selected Role.
- * @script DOMContentLoaded - Initializes the Category field visibility based on the default selected Role.
- */ -->
-
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf

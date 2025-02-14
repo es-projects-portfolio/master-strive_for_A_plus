@@ -1,25 +1,3 @@
-<!-- /**
- * This Blade template renders the login form for the application.
- * 
- * Components used:
- * - <x-guest-layout>: Layout for guest users.
- * - <x-auth-session-status>: Displays session status messages.
- * - <x-input-label>: Label for form inputs.
- * - <x-text-input>: Text input field.
- * - <x-input-error>: Displays validation error messages.
- * - <x-primary-button>: Primary button for form submission.
- * 
- * Form fields:
- * - Username or Email: Text input for username or email.
- * - Password: Password input field.
- * - Remember Me: Checkbox to remember the user.
- * - Forgot Password: Link to reset password.
- * - Not registered?: Link to the registration page.
- * 
- * The form uses POST method and submits to the 'login' route.
- * CSRF protection is included using @csrf directive.
- */ -->
-
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

@@ -1,28 +1,3 @@
-<!-- /**
- * This Blade template is used for the admin dashboard, providing functionalities to:
- * 1. Create a new course.
- * 2. Create a new section and assign a tutor to it.
- * 3. Assign students to a section.
- *
- * Components and functionalities:
- * - <x-app-layout>: Main layout component.
- * - <x-slot name="header">: Header section with the title "Admin".
- * - Success messages: Displayed if session variables 'success_course', 'success_section', or 'success_assign' are set.
- * - Create Course Form:
- *   - Action: Route 'admin.createCourse'.
- *   - Fields: Course Name (prefixed with "Course ").
- * - Create Section & Assign Tutor Form:
- *   - Action: Route 'admin.createSection'.
- *   - Fields: Section Number (numeric), Select Course (dropdown), Select Tutor (dropdown).
- * - Assign Students to Section Form:
- *   - Action: Route 'admin.assignStudentToSection'.
- *   - Fields: Select Course | Section (dropdown), Select Student (dropdown, multiple).
- *   - Dynamic addition of student selection fields using JavaScript.
- *
- * JavaScript:
- * - Adds functionality to dynamically add more student selection fields in the "Assign Students to Section" form.
- */ -->
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

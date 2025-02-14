@@ -230,15 +230,13 @@ class MaterialController extends Controller
     {
         $user = Auth::user();
 
-        // Ensure the user is a tutor
-        if ($user->role !== 'tutor') {
-            return redirect(route('materials.index'))->with('error', 'Only tutors can edit materials.');
+        // Ensure the user is the owner of the material or a tutor
+        if ($user->id !== $material->user_id && $user->role !== 'tutor') {
+            return redirect(route('materials.index'))->with('error', 'You do not have permission to edit this material.');
         }
-
         // Authorize the user
         Gate::authorize('update', $material);
 
-        $user = Auth::user();
         $sections = Section::where('tutor_id', $user->id)->get();
 
         return view('materials.edit', [
@@ -254,9 +252,11 @@ class MaterialController extends Controller
      */
     public function update(Request $request, Material $material): RedirectResponse
     {
-        // Ensure the user is a tutor
-        if ($request->user()->role !== 'tutor') {
-            return redirect(route('materials.index'))->with('error', 'Only tutors can update materials.');
+        $user = Auth::user();
+
+        // Ensure the user is the owner of the material or a tutor
+        if ($user->id !== $material->user_id && $user->role !== 'tutor') {
+            return redirect(route('materials.index'))->with('error', 'You do not have permission to update this material.');
         }
 
         // Authorize the user
