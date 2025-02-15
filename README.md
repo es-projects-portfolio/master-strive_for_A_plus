@@ -1,4 +1,9 @@
 ## Commands
+### Install existing package
+- `composer install`
+- `npm i`
+- `npm run build`
+### Database migration and seeder
 - Migrate refresh: `php artisan migrate:refresh`
 - DB seeder: `php artisan db:seed`
 
