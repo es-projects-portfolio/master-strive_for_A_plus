@@ -1,16 +1,28 @@
 ### Install existing package
+1. redicrect to the folder
 ```
 cd master-strive_for_A_plus
 ```
+2. intall all packages
 ```
 composer install && npm i && npm run build
 ```
+
 ### Database migration and seeder
+3. create `.env` file based on `.env.example`
+4. perform data migration:
 ```
 php artisan migrate:refresh
 ``` 
+5. run seeder:
 ```
 php artisan db:seed
+```
+
+### Run server
+6. run php serve
+```
+php artisan serve
 ```
 
 ## Pages
