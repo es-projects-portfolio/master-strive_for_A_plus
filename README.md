@@ -1,8 +1,17 @@
 ### Install existing package
-- ```composer install && npm i && npm run build```
+```
+cd master-strive_for_A_plus
+```
+```
+composer install && npm i && npm run build
+```
 ### Database migration and seeder
-- ```php artisan migrate:refresh``` 
-- ```php artisan db:seed```
+```
+php artisan migrate:refresh
+``` 
+```
+php artisan db:seed
+```
 
 ## Pages
 1. **Register**
